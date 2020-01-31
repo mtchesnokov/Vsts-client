@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Mtch.VstsClient.Domain.Objects;
 using Mtch.VstsClient.Interfaces;
 using Mtch.VstsClient.IntTests.TestExtensions;
 using NUnit.Framework;
@@ -15,7 +17,7 @@ namespace Mtch.VstsClient.IntTests.UseCases.Repositories.ListRepositories
          var goodProjectName = this.GetGoodProjectName();
 
          //act
-         var repositories = await SUT().GetAllRepositories(goodProjectName);
+         IEnumerable<Repository> repositories = await SUT().GetAllRepositories(goodProjectName);
 
          //arrange
          CollectionAssert.IsNotEmpty(repositories);

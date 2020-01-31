@@ -1,41 +1,50 @@
 Welcome to VSTS client
 =============================
 
-## Getting started 
+## Introduction
 
-This repo contains a simple .Net client for Visual Studio Team Services (aka Azure DevOps Services) REST API. 
+This repo contains a simple .Net client for Azure DevOps Services (aka Visual Studio Team Services) REST API. 
 
- The client consits of the following servies: 
+ The client consits has the following functionality:
 
-*  `ListProjects` - service to get available projects
+* [List projects in organization](#list-proejcts-)
+* [List repositories in project](#list-proejcts-)
+* [List feeds](#list-proejcts-)
+* [List Nuget packages in feed](#list-proejcts-)
+* [List builds definitions and builds in project](#list-proejcts-)
+* [List commits in repository](#list-proejcts-)
 
-and allows the following:
 
-* [List available projects](#list-proejcts-)
+## List projects in organization
 
-
- ## Connecting to VSTS
- In order to connect to VSTS, the following configuration settings should be provided:
-*  `OrganizationName` - name of the organization (required)
-*  `AcessToken` - access token (required)
-
-## List available projects
-
-In the example code below, we show how to get the overview of available elements:
+The following code snippet shos how to get the overview of available projects in your organization:
 
 ```
-IListProjects service = new Services.ListProjects(ClientSettings);
+var clientSettings = new ClientSettings
+{
+   OrganizationName = "Your organization name",
+   AccessToken = "Your personal access token",
+};
 
-IEnumerable<Project> projects = await service.GetAll();
+IProjectsService service = new ProjectsService(clientSettings);
+
+IEnumerable<Project> projects = await service.GetAllProjects();
 ```
 
-With example result:
+In the code example above, in order to be able to connect to the DevOps REST Api we need 
+to provide two variables: 
+* your organization name
+* your personal access token configured with appropriate scopes
+
+
+## List repositories in project
+
+The following code snippet shos how to get the overview of available repositories (GIT) in your project:
 
 ```
-[
-  {
-    "Name": "IntraOffice"
-  }
-]
+string projectName = "Your project name";
 
+IRepositoriesService service = new RepositoriesService(clientSettings);
+
+IEnumerable<Repository> repositories = await service.GetAllRepositories(projectName);
 ```
