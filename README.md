@@ -7,7 +7,7 @@ This repo contains a simple .Net client for Azure DevOps Services (aka Visual St
 
  The client consits has the following functionality:
 
-* [List projects in organization](#list-proejcts-in-organization)
+* [List projects in organization](#list-projets-in-organization)
 * [List repositories in project](#list-repositories-in-project)
 * [List feeds](#list-proejcts-)
 * [List Nuget packages in feed](#list-proejcts-)
