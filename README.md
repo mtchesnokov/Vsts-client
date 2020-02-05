@@ -1,6 +1,3 @@
-Welcome to VSTS client
-=============================
-
 ## Introduction
 
 This repo contains a simple .Net client for Azure DevOps Services (aka Visual Studio Team Services) REST API. 
