@@ -3,11 +3,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Mtch.VstsClient.Config;
-using Mtch.VstsClient.Domain.Helpers;
-using Mtch.VstsClient.Interfaces.Helpers;
+using Tch.VstsClient.Config;
+using Tch.VstsClient.Domain.Helpers;
+using Tch.VstsClient.Interfaces.Helpers;
 
-namespace Mtch.VstsClient.Services.Helpers
+namespace Tch.VstsClient.Services.Helpers
 {
    internal class HttpService : IHttpService
    {

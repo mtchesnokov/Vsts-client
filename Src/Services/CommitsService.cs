@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mtch.VstsClient.Config;
-using Mtch.VstsClient.Domain.Exceptions;
-using Mtch.VstsClient.Domain.Objects;
-using Mtch.VstsClient.Interfaces;
-using Mtch.VstsClient.Interfaces.Helpers;
-using Mtch.VstsClient.Services.Helpers;
+using Tch.VstsClient.Config;
+using Tch.VstsClient.Domain.Exceptions;
+using Tch.VstsClient.Domain.Objects;
+using Tch.VstsClient.Interfaces;
+using Tch.VstsClient.Interfaces.Helpers;
+using Tch.VstsClient.Services.Helpers;
 
-namespace Mtch.VstsClient.Services
+namespace Tch.VstsClient.Services
 {
    public class CommitsService : ICommitsService
    {
-      private readonly IObjectHttpService _httpService;
+      private readonly IVstsClientService _httpService;
 
       #region ctor
 
-      public CommitsService(ClientSettings clientSettings) : this(new ObjectHttpService(clientSettings))
+      public CommitsService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings))
       {
       }
 
-      internal CommitsService(IObjectHttpService httpService)
+      internal CommitsService(IVstsClientService httpService)
       {
          _httpService = httpService;
       }

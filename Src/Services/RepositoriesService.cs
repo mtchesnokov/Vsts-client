@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mtch.VstsClient.Config;
-using Mtch.VstsClient.Domain.Exceptions;
-using Mtch.VstsClient.Domain.Objects;
-using Mtch.VstsClient.Interfaces;
-using Mtch.VstsClient.Interfaces.Helpers;
-using Mtch.VstsClient.Services.Helpers;
+using Tch.VstsClient.Config;
+using Tch.VstsClient.Domain.Exceptions;
+using Tch.VstsClient.Domain.Objects;
+using Tch.VstsClient.Interfaces;
+using Tch.VstsClient.Interfaces.Helpers;
+using Tch.VstsClient.Services.Helpers;
 
-namespace Mtch.VstsClient.Services
+namespace Tch.VstsClient.Services
 {
-   /// <summary>
-   /// Implementation of <see cref="IRepositoriesService"/>
-   /// </summary>
    public class RepositoriesService : IRepositoriesService
    {
-      private readonly IObjectHttpService _httpService;
+      private readonly IVstsClientService _httpService;
 
       #region ctor
 
-      public RepositoriesService(ClientSettings clientSettings) : this(new ObjectHttpService(clientSettings))
+      public RepositoriesService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings))
       {
       }
 
-      internal RepositoriesService(IObjectHttpService httpService)
+      internal RepositoriesService(IVstsClientService httpService)
       {
          _httpService = httpService;
       }
@@ -34,7 +31,7 @@ namespace Mtch.VstsClient.Services
          public Repository[] Value { get; set; }
       }
 
-      public async Task<IEnumerable<Repository>> GetAllRepositories(string projectName)
+      public async Task<IEnumerable<Repository>> GetAllGitRepositories(string projectName)
       {
          try
          {

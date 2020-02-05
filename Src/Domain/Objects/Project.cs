@@ -1,7 +1,7 @@
-﻿namespace Mtch.VstsClient.Domain.Objects
+﻿namespace Tch.VstsClient.Domain.Objects
 {
    /// <summary>
-   /// This class represents VSTS project
+   /// This class represents DevOps project
    /// </summary>
    public class Project
    {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mtch.VstsClient.Domain.Objects
+namespace Tch.VstsClient.Domain.Objects
 {
    /// <summary>
    ///    This class represents VSTS Nuget package

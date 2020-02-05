@@ -1,28 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mtch.VstsClient.Config;
-using Mtch.VstsClient.Domain.Exceptions;
-using Mtch.VstsClient.Domain.Objects;
-using Mtch.VstsClient.Interfaces;
-using Mtch.VstsClient.Interfaces.Helpers;
-using Mtch.VstsClient.Services.Helpers;
+using Tch.VstsClient.Config;
+using Tch.VstsClient.Domain.Exceptions;
+using Tch.VstsClient.Domain.Objects;
+using Tch.VstsClient.Interfaces;
+using Tch.VstsClient.Interfaces.Helpers;
+using Tch.VstsClient.Services.Helpers;
 
-namespace Mtch.VstsClient.Services
+namespace Tch.VstsClient.Services
 {
    /// <summary>
-   ///    Implementation of <see cref="IFeedsService" />
+   ///    Implementation of <see cref="INugetFeedsService" />
    /// </summary>
    public class PackagesService : IPackagesService
    {
-      private readonly IObjectHttpService _httpService;
+      private readonly IVstsClientService _httpService;
 
       #region ctor
 
-      public PackagesService(ClientSettings clientSettings) : this(new ObjectHttpService(clientSettings))
+      public PackagesService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings))
       {
       }
 
-      internal PackagesService(IObjectHttpService httpService)
+      internal PackagesService(IVstsClientService httpService)
       {
          _httpService = httpService;
       }

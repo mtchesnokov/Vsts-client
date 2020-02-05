@@ -2,29 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mtch.VstsClient.Config;
-using Mtch.VstsClient.Domain.Exceptions;
-using Mtch.VstsClient.Domain.Objects;
-using Mtch.VstsClient.Interfaces;
-using Mtch.VstsClient.Interfaces.Helpers;
-using Mtch.VstsClient.Services.Helpers;
+using Tch.VstsClient.Config;
+using Tch.VstsClient.Domain.Exceptions;
+using Tch.VstsClient.Domain.Objects;
+using Tch.VstsClient.Interfaces;
+using Tch.VstsClient.Interfaces.Helpers;
+using Tch.VstsClient.Services.Helpers;
 
-namespace Mtch.VstsClient.Services
+namespace Tch.VstsClient.Services
 {
-   /// <summary>
-   ///    Implementation of <see cref="IBuildsService" />
-   /// </summary>
    public class BuildsService : IBuildsService
    {
-      private readonly IObjectHttpService _httpService;
+      private readonly IVstsClientService _httpService;
 
       #region ctor
 
-      public BuildsService(ClientSettings clientSettings) : this(new ObjectHttpService(clientSettings))
+      public BuildsService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings))
       {
       }
 
-      internal BuildsService(IObjectHttpService httpService)
+      internal BuildsService(IVstsClientService httpService)
       {
          _httpService = httpService;
       }
@@ -56,12 +53,6 @@ namespace Mtch.VstsClient.Services
          }
 
          return allBuilds.Where(b => string.Equals(b.Definition?.Name, buildDefinitionName, StringComparison.InvariantCultureIgnoreCase));
-      }
-
-      public async Task<IEnumerable<string>> GetAllBuildDefinitionNames(string projectName)
-      {
-         var builds = await GetAllBuilds(projectName, string.Empty);
-         return builds.Select(x => x.Definition?.Name).Where(s => !string.IsNullOrEmpty(s)).Distinct();
       }
    }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Mtch.VstsClient.Domain.Helpers
+namespace Tch.VstsClient.Domain.Helpers
 {
    internal class HttpResponseDto
    {

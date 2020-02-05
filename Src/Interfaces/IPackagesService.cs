@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mtch.VstsClient.Domain.Objects;
+using Tch.VstsClient.Domain.Objects;
 
-namespace Mtch.VstsClient.Interfaces
+namespace Tch.VstsClient.Interfaces
 {
    /// <summary>
    ///    This interface represents service to work with VSTS Nuget packages

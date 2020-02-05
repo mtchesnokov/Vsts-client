@@ -1,4 +1,4 @@
-﻿namespace Mtch.VstsClient.Config
+﻿namespace Tch.VstsClient.Config
 {
    public class ClientSettings
    {

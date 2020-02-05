@@ -1,7 +1,7 @@
-﻿namespace Mtch.VstsClient.Domain.Objects
+﻿namespace Tch.VstsClient.Domain.Objects
 {
    /// <summary>
-   /// This class represents VSTS Repo
+   /// This class represents DevOps Repository
    /// </summary>
    public class Repository
    {

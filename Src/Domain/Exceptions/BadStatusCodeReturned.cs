@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net;
-using Mtch.VstsClient.Domain.Objects;
+using Tch.VstsClient.Domain.Objects;
 
-namespace Mtch.VstsClient.Domain.Exceptions
+namespace Tch.VstsClient.Domain.Exceptions
 {
    public class BadStatusCodeReturned : Exception
    {

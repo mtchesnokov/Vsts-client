@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mtch.VstsClient.Domain.Objects
+namespace Tch.VstsClient.Domain.Objects
 {
    public class Commit
    {

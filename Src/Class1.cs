@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("Mtch.VstsClient.UnitTests")]
+[assembly:InternalsVisibleTo("Tch.VstsClient.UnitTests")]

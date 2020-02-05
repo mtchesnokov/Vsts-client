@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mtch.VstsClient.Domain.Exceptions
+namespace Tch.VstsClient.Domain.Exceptions
 {
    public class RepositoryNotFoundException : Exception
    {
