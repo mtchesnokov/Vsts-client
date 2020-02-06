@@ -3,9 +3,9 @@ using Tch.VstsClient.Domain.Exceptions;
 using Tch.VstsClient.Interfaces;
 using Tch.VstsClient.IntTests.TestExtensions;
 
-namespace Tch.VstsClient.IntTests.UseCases.BuildDefinitions.ListBuildDefinitions
+namespace Tch.VstsClient.IntTests.UseCases.Builds.ListBuildDefinitions
 {
-   public class UnhappyTests : IntegrationTestBase<IBuildDefinitionsService>
+   public class UnhappyTests : IntegrationTestBase<IBuildsService>
    {
       [Test]
       public void Bad_Project_Name()

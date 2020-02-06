@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Tch.VstsClient.Domain.Exceptions
+﻿namespace Tch.VstsClient.Domain.Exceptions
 {
-   public class FeedNotFoundException : Exception
+   public class FeedNotFoundException : VstsClientExceptionBase
    {
       public string FeedName { get; set; }
 

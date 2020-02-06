@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Tch.VstsClient.Domain.Exceptions
+﻿namespace Tch.VstsClient.Domain.Exceptions
 {
-   public class PackageNotFoundException : Exception
+   public class PackageNotFoundException : VstsClientExceptionBase
    {
       public string FeedName { get; set; }
 

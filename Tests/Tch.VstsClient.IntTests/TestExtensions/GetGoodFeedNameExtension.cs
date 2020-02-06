@@ -7,7 +7,7 @@ namespace Tch.VstsClient.IntTests.TestExtensions
    {
       public static string GetGoodFeedName(this IntegrationTestBase test)
       {
-         var service = new NugetFeedsService(test.ClientSettings);
+         var service = new PackagesService(test.ClientSettings);
          var feeds = service.GetAllFeeds().GetAwaiter().GetResult();
          return feeds.First().Name;
       }

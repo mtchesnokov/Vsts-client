@@ -1,10 +1,9 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Tch.VstsClient.Domain.Objects;
 
 namespace Tch.VstsClient.Domain.Exceptions
 {
-   public class NotFoundStatusCodeException : Exception
+   public class NotFoundStatusCodeException : VstsClientExceptionBase
    {
       public HttpStatusCode StatusCode { get; } = HttpStatusCode.NotFound;
 

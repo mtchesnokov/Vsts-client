@@ -36,16 +36,16 @@ namespace Tch.VstsClient.Services.Helpers
             return JsonConvert.DeserializeObject<TObject>(httpResponseDto.Body);
          }
 
+         if (statusCode == HttpStatusCode.Unauthorized)
+         {
+            throw new UnauthorizedException();
+         }
+
          var error = JsonConvert.DeserializeObject<Error>(httpResponseDto.Body);
 
          if (statusCode == HttpStatusCode.NotFound)
          {
             throw new NotFoundStatusCodeException {Error = error};
-         }
-
-         if (statusCode == HttpStatusCode.Unauthorized)
-         {
-            throw new UnauthorizedException();
          }
 
          throw new BadStatusCodeReturned {StatusCode = statusCode, Error = error};

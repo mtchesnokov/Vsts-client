@@ -28,9 +28,14 @@ namespace Tch.VstsClient.Services
 
       #endregion
 
-      private class HttpResponse
+      private class HttpResponse1
       {
          public Build[] Value { get; set; }
+      }
+
+      private class HttpResponse2
+      {
+         public BuildDefinition[] Value { get; set; }
       }
 
       public async Task<IEnumerable<Build>> GetAllBuilds(string projectName, string buildDefinitionName)
@@ -39,7 +44,7 @@ namespace Tch.VstsClient.Services
 
          try
          {
-            var httpResponse = await _httpService.Get<HttpResponse>($"/{projectName}/_apis/build/builds?api-version=5.0");
+            var httpResponse = await _httpService.Get<HttpResponse1>($"/{projectName}/_apis/build/builds?api-version=5.0");
             allBuilds = httpResponse.Value;
          }
          catch (BadStatusCodeReturned)
@@ -53,6 +58,23 @@ namespace Tch.VstsClient.Services
          }
 
          return allBuilds.Where(b => string.Equals(b.Definition?.Name, buildDefinitionName, StringComparison.InvariantCultureIgnoreCase));
+      }
+
+      public async Task<IEnumerable<BuildDefinition>> GetAllBuildDefinitions(string projectName)
+      {
+         BuildDefinition[] allBuilds;
+
+         try
+         {
+            var httpResponse = await _httpService.Get<HttpResponse2>($"/{projectName}/_apis/build/definitions?api-version=5.0");
+            allBuilds = httpResponse.Value;
+         }
+         catch (BadStatusCodeReturned)
+         {
+            throw new ProjectNotFoundException {ProjectName = projectName};
+         }
+
+         return allBuilds;
       }
    }
 }

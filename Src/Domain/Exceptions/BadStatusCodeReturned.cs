@@ -1,10 +1,9 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Tch.VstsClient.Domain.Objects;
 
 namespace Tch.VstsClient.Domain.Exceptions
 {
-   public class BadStatusCodeReturned : Exception
+   public class BadStatusCodeReturned : VstsClientExceptionBase
    {
       public HttpStatusCode StatusCode { get; set; }
 

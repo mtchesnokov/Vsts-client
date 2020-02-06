@@ -29,46 +29,69 @@ namespace Tch.VstsClient.Services
 
       #endregion
 
-      private class HttpResponse
+      private class HttpResponse1
       {
          public Package[] Value { get; set; }
       }
 
-      public async Task<PackageVersionDetails> GetPackageVersionDetails(string feedName, string packageId, string packageVersion)
+      private class HttpResponse2
       {
-         try
-         {
-            var response = await _httpService.Get<PackageVersionDetails>($"/_apis/packaging/feeds/{feedName}/packages/{packageId}/versions/{packageVersion}?api-version=5.1-preview.1", "https://feeds.dev.azure.com");
-            var packages = response;
-            return packages;
-         }
-         catch (BadStatusCodeReturned)
-         {
-            throw new PackageNotFoundException {PackageId = packageId, VersionNumber = packageVersion, FeedName = feedName};
-         }
-         catch (NotFoundStatusCodeException e)
-         {
-            var errorType = e.Error.TypeKey;
+         public PackageFeed[] Value { get; set; }
+      }
 
-            if (errorType.Contains("PackageVersionNotFound"))
-            {
-               throw new PackageNotFoundException {PackageId = packageId, VersionNumber = packageVersion, FeedName = feedName};
-            }
+      private class HttpResponse3
+      {
+         public PackageVersion[] Value { get; set; }
+      }
 
-            throw new FeedNotFoundException {FeedName = feedName};
-         }
+      public async Task<IEnumerable<PackageFeed>> GetAllFeeds()
+      {
+         var response = await _httpService.Get<HttpResponse2>("/_apis/packaging/feeds?api-version=5.1-preview.1", "https://feeds.dev.azure.com");
+         return response.Value;
       }
 
       public async Task<IEnumerable<Package>> GetAllPackages(string feedName)
       {
          try
          {
-            var response = await _httpService.Get<HttpResponse>($"/_apis/packaging/feeds/{feedName}/packages?api-version=5.1-preview.1", "https://feeds.dev.azure.com");
+            var response = await _httpService.Get<HttpResponse1>($"/_apis/packaging/feeds/{feedName}/packages?api-version=5.1-preview.1", "https://feeds.dev.azure.com");
             var packages = response.Value;
             return packages;
          }
          catch (NotFoundStatusCodeException)
          {
+            throw new FeedNotFoundException {FeedName = feedName};
+         }
+      }
+
+      public async Task<IEnumerable<PackageVersion>> GetAllPackageVersions(string feedName, string packageId)
+      {
+         try
+         {
+            var response = await _httpService.Get<HttpResponse3>($"/_apis/packaging/feeds/{feedName}/packages/{packageId}/versions", "https://feeds.dev.azure.com");
+            var packages = response.Value;
+            return packages;
+         }
+         catch (BadStatusCodeReturned e)
+         {
+            var errorType = e.Error.TypeKey;
+
+            if (errorType.Contains("InvalidPackage"))
+            {
+               throw new PackageNotFoundException { PackageId = packageId, FeedName = feedName };
+            }
+
+            throw new FeedNotFoundException { FeedName = feedName };
+         }
+         catch (NotFoundStatusCodeException e)
+         {
+            var errorType = e.Error.TypeKey;
+
+            if (errorType.Contains("InvalidPackage"))
+            {
+               throw new PackageNotFoundException {PackageId = packageId, FeedName = feedName};
+            }
+
             throw new FeedNotFoundException {FeedName = feedName};
          }
       }

@@ -3,10 +3,12 @@
 namespace Tch.VstsClient.Domain.Objects
 {
    /// <summary>
-   ///    This class represents VSTS Build
+   ///    This class represents DevOps Build
    /// </summary>
    public class Build
    {
+      public int Id { get; set; }
+
       public string BuildNumber { get; set; }
 
       public BuildDefinition Definition { get; set; }

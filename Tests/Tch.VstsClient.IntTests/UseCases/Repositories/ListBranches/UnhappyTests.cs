@@ -3,16 +3,16 @@ using Tch.VstsClient.Domain.Exceptions;
 using Tch.VstsClient.Interfaces;
 using Tch.VstsClient.IntTests.TestExtensions;
 
-namespace Tch.VstsClient.IntTests.UseCases.Commits.ListCommits
+namespace Tch.VstsClient.IntTests.UseCases.Repositories.ListBranches
 {
    [Explicit]
-   public class UnhappyTests : IntegrationTestBase<ICommitsService>
+   public class UnhappyTests : IntegrationTestBase<IRepositoriesService>
    {
       private string _projectName;
       private string _repositoryId;
 
       [SetUp]
-      public void SetUp()
+      public void SetUp2()
       {
          _projectName = this.GetGoodProjectName();
          _repositoryId = this.GetGoodRepository(_projectName).Id;
@@ -25,7 +25,7 @@ namespace Tch.VstsClient.IntTests.UseCases.Commits.ListCommits
          _projectName = "abcd";
 
          //act+assert
-         var exception = Assert.ThrowsAsync<ProjectNotFoundException>(() => SUT().GetAllCommits(_projectName, _repositoryId));
+         var exception = Assert.ThrowsAsync<ProjectNotFoundException>(() => SUT().GetAllBranches(_projectName, _repositoryId));
 
          //print 
          exception.Print();
@@ -38,7 +38,7 @@ namespace Tch.VstsClient.IntTests.UseCases.Commits.ListCommits
          _repositoryId = "abcd";
 
          //act+assert
-         var exception = Assert.ThrowsAsync<RepositoryNotFoundException>(() => SUT().GetAllCommits(_projectName, _repositoryId));
+         var exception = Assert.ThrowsAsync<RepositoryNotFoundException>(() => SUT().GetAllBranches(_projectName, _repositoryId));
 
          //print 
          exception.Print();

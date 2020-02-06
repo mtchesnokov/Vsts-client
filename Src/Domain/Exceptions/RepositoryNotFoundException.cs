@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Tch.VstsClient.Domain.Exceptions
+﻿namespace Tch.VstsClient.Domain.Exceptions
 {
-   public class RepositoryNotFoundException : Exception
+   public class RepositoryNotFoundException : VstsClientExceptionBase
    {
       public string ProjectName { get; set; }
 

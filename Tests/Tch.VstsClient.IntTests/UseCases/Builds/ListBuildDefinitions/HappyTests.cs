@@ -3,9 +3,9 @@ using NUnit.Framework;
 using Tch.VstsClient.Interfaces;
 using Tch.VstsClient.IntTests.TestExtensions;
 
-namespace Tch.VstsClient.IntTests.UseCases.BuildDefinitions.ListBuildDefinitions
+namespace Tch.VstsClient.IntTests.UseCases.Builds.ListBuildDefinitions
 {
-   public class HappyTests : IntegrationTestBase<IBuildDefinitionsService>
+   public class HappyTests : IntegrationTestBase<IBuildsService>
    {
       [Test]
       public async Task Happy_Case()

@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotMemory.Unit, Version=111.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.dotMemoryUnit.3.1.20200127.214830\lib\net35\dotMemory.Unit.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -65,13 +68,19 @@
     <Compile Include="TestExtensions\GetAllRepositoriesExtension.cs" />
     <Compile Include="TestExtensions\GetGoodRepositoryExtension.cs" />
     <Compile Include="TestExtensions\PrintExtension.cs" />
-    <Compile Include="UseCases\BuildDefinitions\ListBuildDefinitions\HappyTests.cs" />
-    <Compile Include="UseCases\BuildDefinitions\ListBuildDefinitions\UnhappyTests.cs" />
+    <Compile Include="UseCases\Builds\ListBuildDefinitions\HappyTests.cs" />
+    <Compile Include="UseCases\Builds\ListBuildDefinitions\UnhappyTests.cs" />
     <Compile Include="UseCases\Builds\ListBuilds\HappyTests.cs" />
     <Compile Include="UseCases\Builds\ListBuilds\UnhappyTests.cs" />
-    <Compile Include="UseCases\NugetFeeds\ListFeeds\HappyTests.cs" />
-    <Compile Include="UseCases\Commits\ListCommits\HappyTests.cs" />
-    <Compile Include="UseCases\Commits\ListCommits\UnhappyTests.cs" />
+    <Compile Include="UseCases\Packages\ListPackageVersions\HappyTests.cs" />
+    <Compile Include="UseCases\Packages\ListPackageVersions\UnhappyTests.cs" />
+    <Compile Include="UseCases\Packages\ListPackages\HappyTests.cs" />
+    <Compile Include="UseCases\Packages\ListFeeds\HappyTests.cs" />
+    <Compile Include="UseCases\Packages\ListPackages\UnhappyTests.cs" />
+    <Compile Include="UseCases\Repositories\ListCommits\HappyTests.cs" />
+    <Compile Include="UseCases\Repositories\ListCommits\UnhappyTests.cs" />
+    <Compile Include="UseCases\Repositories\ListBranches\HappyTests.cs" />
+    <Compile Include="UseCases\Repositories\ListBranches\UnhappyTests.cs" />
     <Compile Include="UseCases\Repositories\ListRepositories\HappyTests.cs" />
     <Compile Include="UseCases\Projects\ListProjects\HappyTests.cs" />
     <Compile Include="UseCases\Repositories\ListRepositories\UnhappyTests.cs" />
@@ -87,9 +96,7 @@
     <None Include="packages.config" />
     <None Include="RunIntegrationTests.cmd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UseCases\Packages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

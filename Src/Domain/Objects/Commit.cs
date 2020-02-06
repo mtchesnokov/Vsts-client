@@ -2,6 +2,9 @@
 
 namespace Tch.VstsClient.Domain.Objects
 {
+   /// <summary>
+   /// This class represents DevOps commit
+   /// </summary>
    public class Commit
    {
       public string Id { get; set; }
