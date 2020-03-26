@@ -11,7 +11,7 @@ namespace Tch.VstsClient.Interfaces.Helpers
       /// <summary>
       /// Send http GET request and parse response
       /// </summary>
-      /// <param name="relativeUrl">Relative address of endpoing</param>
+      /// <param name="relativeUrl">Relative address of endpoint</param>
       /// <param name="baseUrl">Base url of Dev Ops REST Api</param>
       /// <returns></returns>
       Task<HttpResponseDto> Get(string relativeUrl, string baseUrl);

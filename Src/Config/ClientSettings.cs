@@ -1,9 +1,40 @@
-﻿namespace Tch.VstsClient.Config
+﻿using System;
+
+namespace Tch.VstsClient.Config
 {
+   /// <summary>
+   ///    This class represents credentials needed to be able to connect to DevOps REST Api
+   /// </summary>
    public class ClientSettings
    {
-      public string AccessToken { get; set; }
+      /// <summary>
+      ///    Access token
+      /// </summary>
+      public string AccessToken { get; }
 
-      public string OrganizationName { get; set; }
+      /// <summary>
+      ///    Organization name
+      /// </summary>
+      public string OrganizationName { get; }
+
+      #region ctor
+
+      public ClientSettings(string organizationName, string accessToken)
+      {
+         if (string.IsNullOrEmpty(organizationName))
+         {
+            throw new ArgumentNullException(nameof(organizationName));
+         }
+
+         if (string.IsNullOrEmpty(accessToken))
+         {
+            throw new ArgumentNullException(nameof(accessToken));
+         }
+
+         OrganizationName = organizationName;
+         AccessToken = accessToken;
+      }
+
+      #endregion
    }
 }

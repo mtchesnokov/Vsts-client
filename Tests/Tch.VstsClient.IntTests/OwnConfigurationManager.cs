@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Tch.VstsClient.IntTests
 {
+   /// <summary>
+   /// This is help class to 'redirect' to another app.config (beyond working folder)
+   /// </summary>
    internal static class OwnConfigurationManager
    {
       public static string GetAppSetting(string appSettingName)

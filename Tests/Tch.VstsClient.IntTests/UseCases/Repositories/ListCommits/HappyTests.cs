@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Tch.VstsClient.Interfaces;
 using Tch.VstsClient.IntTests.TestExtensions;
@@ -13,15 +14,17 @@ namespace Tch.VstsClient.IntTests.UseCases.Repositories.ListCommits
       {
          //arrange
          var goodProjectName = this.GetGoodProjectName();
-         var goodRepositoryId = this.GetGoodRepository(goodProjectName).Id;
+         var goodRepository = this.GetGoodRepository(goodProjectName);
 
          //act
-         var repositories = await SUT().GetAllCommits(goodProjectName, goodRepositoryId, "master", 3);
+         var repositories = await SUT().GetAllCommits(goodProjectName, goodRepository.Id, "master", 3);
 
          //arrange
          CollectionAssert.IsNotEmpty(repositories);
 
          //print
+         Console.WriteLine($"Project: {goodProjectName}");
+         Console.WriteLine($"Repository: {goodRepository.Name}");
          repositories.Print();
       }
    }

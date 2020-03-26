@@ -14,16 +14,18 @@ namespace Tch.VstsClient.Services
    public class BuildsService : IBuildsService
    {
       private readonly IVstsClientService _httpService;
+      private readonly ILocalExceptionService _localExceptionService;
 
       #region ctor
 
-      public BuildsService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings))
+      public BuildsService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings), new LocalExceptionService())
       {
       }
 
-      internal BuildsService(IVstsClientService httpService)
+      internal BuildsService(IVstsClientService httpService, ILocalExceptionService localExceptionService)
       {
          _httpService = httpService;
+         _localExceptionService = localExceptionService;
       }
 
       #endregion
@@ -47,9 +49,10 @@ namespace Tch.VstsClient.Services
             var httpResponse = await _httpService.Get<HttpResponse1>($"/{projectName}/_apis/build/builds?api-version=5.0");
             allBuilds = httpResponse.Value;
          }
-         catch (BadStatusCodeReturned)
+         catch (BadStatusCodeReturned e)
          {
-            throw new ProjectNotFoundException {ProjectName = projectName};
+            _localExceptionService.TryMatch<ProjectNotFoundException>(e, new {projectName});
+            throw;
          }
 
          if (string.IsNullOrEmpty(buildDefinitionName))
@@ -69,9 +72,10 @@ namespace Tch.VstsClient.Services
             var httpResponse = await _httpService.Get<HttpResponse2>($"/{projectName}/_apis/build/definitions?api-version=5.0");
             allBuilds = httpResponse.Value;
          }
-         catch (BadStatusCodeReturned)
+         catch (BadStatusCodeReturned e)
          {
-            throw new ProjectNotFoundException {ProjectName = projectName};
+            _localExceptionService.TryMatch<ProjectNotFoundException>(e, new {projectName});
+            throw;
          }
 
          return allBuilds;

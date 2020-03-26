@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Tch.VstsClient.Interfaces;
 using Tch.VstsClient.IntTests.TestExtensions;
@@ -20,6 +21,7 @@ namespace Tch.VstsClient.IntTests.UseCases.Builds.ListBuildDefinitions
          CollectionAssert.IsNotEmpty(builds);
 
          //print
+         Console.WriteLine($"Project: {goodProjectName}");
          builds.Print();
       }
    }

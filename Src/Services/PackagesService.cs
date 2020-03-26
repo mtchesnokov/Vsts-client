@@ -9,21 +9,20 @@ using Tch.VstsClient.Services.Helpers;
 
 namespace Tch.VstsClient.Services
 {
-   /// <summary>
-   ///    Implementation of <see cref="INugetFeedsService" />
-   /// </summary>
    public class PackagesService : IPackagesService
    {
       private readonly IVstsClientService _httpService;
+      private readonly ILocalExceptionService _localExceptionService;
 
       #region ctor
 
-      public PackagesService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings))
+      public PackagesService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings), new LocalExceptionService())
       {
       }
 
-      internal PackagesService(IVstsClientService httpService)
+      internal PackagesService(IVstsClientService httpService, ILocalExceptionService localExceptionService)
       {
+         _localExceptionService = localExceptionService;
          _httpService = httpService;
       }
 
@@ -55,12 +54,12 @@ namespace Tch.VstsClient.Services
          try
          {
             var response = await _httpService.Get<HttpResponse1>($"/_apis/packaging/feeds/{feedName}/packages?api-version=5.1-preview.1", "https://feeds.dev.azure.com");
-            var packages = response.Value;
-            return packages;
+            return response.Value;
          }
-         catch (NotFoundStatusCodeException)
+         catch (BadStatusCodeReturned e)
          {
-            throw new FeedNotFoundException {FeedName = feedName};
+            _localExceptionService.TryMatch<FeedNotFoundException>(e, new {feedName});
+            throw;
          }
       }
 
@@ -69,30 +68,13 @@ namespace Tch.VstsClient.Services
          try
          {
             var response = await _httpService.Get<HttpResponse3>($"/_apis/packaging/feeds/{feedName}/packages/{packageId}/versions", "https://feeds.dev.azure.com");
-            var packages = response.Value;
-            return packages;
+            return response.Value;
          }
          catch (BadStatusCodeReturned e)
          {
-            var errorType = e.Error.TypeKey;
-
-            if (errorType.Contains("InvalidPackage"))
-            {
-               throw new PackageNotFoundException { PackageId = packageId, FeedName = feedName };
-            }
-
-            throw new FeedNotFoundException { FeedName = feedName };
-         }
-         catch (NotFoundStatusCodeException e)
-         {
-            var errorType = e.Error.TypeKey;
-
-            if (errorType.Contains("InvalidPackage"))
-            {
-               throw new PackageNotFoundException {PackageId = packageId, FeedName = feedName};
-            }
-
-            throw new FeedNotFoundException {FeedName = feedName};
+            _localExceptionService.TryMatch<PackageNotFoundException>(e, new {feedName, packageId});
+            _localExceptionService.TryMatch<FeedNotFoundException>(e, new {feedName});
+            throw;
          }
       }
    }

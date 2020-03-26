@@ -6,16 +6,26 @@ namespace Tch.VstsClient.UnitTests
    [TestFixture]
    public abstract class UnitTestBase
    {
+      private IContainer GlobalContainer { get; set; }
+
       public IContainer Container { get; set; }
 
       [OneTimeSetUp]
       public void OneTimeSetup()
       {
-         Container = new Container(cfg => cfg.Scan(s =>
-         {
-            s.AssembliesAndExecutablesFromApplicationBaseDirectory(a => a.StartsWith("Tch."));
-            s.LookForRegistries();
-         }));
+         GlobalContainer = new Container(cfg => cfg.AddRegistry<MasterRegistry>());
+      }
+
+      [SetUp]
+      public void SetUp()
+      {
+         Container = GlobalContainer.GetNestedContainer();
+      }
+
+      [TearDown]
+      public void TearDown()
+      {
+         Container?.Dispose();
       }
    }
 }

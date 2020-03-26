@@ -14,16 +14,18 @@ namespace Tch.VstsClient.Services
    public class RepositoriesService : IRepositoriesService
    {
       private readonly IVstsClientService _httpService;
+      private readonly ILocalExceptionService _localExceptionService;
 
       #region ctor
 
-      public RepositoriesService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings))
+      public RepositoriesService(ClientSettings clientSettings) : this(new VstsClientService(clientSettings), new LocalExceptionService())
       {
       }
 
-      internal RepositoriesService(IVstsClientService httpService)
+      internal RepositoriesService(IVstsClientService httpService, ILocalExceptionService localExceptionService)
       {
          _httpService = httpService;
+         _localExceptionService = localExceptionService;
       }
 
       #endregion
@@ -66,9 +68,10 @@ namespace Tch.VstsClient.Services
             var response = await _httpService.Get<HttpResponse1>($"/{projectName}/_apis/git/repositories");
             return response.Value;
          }
-         catch (NotFoundStatusCodeException)
+         catch (BadStatusCodeReturned e)
          {
-            throw new ProjectNotFoundException {ProjectName = projectName};
+            _localExceptionService.TryMatch<ProjectNotFoundException>(e, new {projectName});
+            throw;
          }
       }
 
@@ -79,14 +82,11 @@ namespace Tch.VstsClient.Services
             var response = await _httpService.Get<HttpResponse2>($"/{projectName}/_apis/git/repositories/{repositoryId}/refs?filter=heads/&api-version=5.1");
             return response.Value.Select(x => new Branch {Name = x.Name?.Replace("refs/heads/", "")});
          }
-         catch (NotFoundStatusCodeException e)
+         catch (BadStatusCodeReturned e)
          {
-            if (e.Error.TypeKey.Contains("ProjectDoesNotExist"))
-            {
-               throw new ProjectNotFoundException {ProjectName = projectName};
-            }
-
-            throw new RepositoryNotFoundException {ProjectName = projectName, RepositoryId = repositoryId};
+            _localExceptionService.TryMatch<ProjectNotFoundException>(e, new {projectName});
+            _localExceptionService.TryMatch<RepositoryNotFoundException>(e, new {projectName, repositoryId});
+            throw;
          }
       }
 
@@ -98,19 +98,12 @@ namespace Tch.VstsClient.Services
 
             return response.Value.Select(x => new Commit {Author = x.Author.Name, Date = x.Author.Date, Comment = x.Comment, Id = x.CommitId});
          }
-         catch (NotFoundStatusCodeException e)
+         catch (BadStatusCodeReturned e)
          {
-            if (e.Error.TypeKey.Contains("ProjectDoesNotExist"))
-            {
-               throw new ProjectNotFoundException {ProjectName = projectName};
-            }
-
-            if (e.Error.TypeKey.Contains("GitRepositoryNotFoundException"))
-            {
-               throw new RepositoryNotFoundException {RepositoryId = repositoryId, ProjectName = projectName};
-            }
-
-            throw new BranchNotFoundException {ProjectName = projectName, RepositoryId = repositoryId, BranchName = branchName};
+            _localExceptionService.TryMatch<ProjectNotFoundException>(e, new {projectName});
+            _localExceptionService.TryMatch<RepositoryNotFoundException>(e, new {projectName, repositoryId});
+            _localExceptionService.TryMatch<BranchNotFoundException>(e, new {projectName, repositoryId, branchName});
+            throw;
          }
       }
    }

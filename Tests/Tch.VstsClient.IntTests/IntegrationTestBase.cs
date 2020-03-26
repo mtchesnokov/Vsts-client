@@ -11,11 +11,10 @@ namespace Tch.VstsClient.IntTests
    {
       public IContainer Container { get; set; }
 
-      public ClientSettings ClientSettings => new ClientSettings
-      {
-         AccessToken = OwnConfigurationManager.GetAppSetting("accessToken"),
-         OrganizationName = OwnConfigurationManager.GetAppSetting("organizationName")
-      };
+      public ClientSettings ClientSettings => new ClientSettings(
+         organizationName: OwnConfigurationManager.GetAppSetting("organizationName"),
+         accessToken: OwnConfigurationManager.GetAppSetting("accessToken")
+      );
 
       [OneTimeSetUp]
       public void OneTimeSetup()

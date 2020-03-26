@@ -9,6 +9,9 @@ using Tch.VstsClient.Interfaces.Helpers;
 
 namespace Tch.VstsClient.Services.Helpers
 {
+   /// <summary>
+   /// Implementation of <see cref="IHttpService"/>
+   /// </summary>
    internal class HttpService : IHttpService
    {
       private readonly ClientSettings _clientSettings;

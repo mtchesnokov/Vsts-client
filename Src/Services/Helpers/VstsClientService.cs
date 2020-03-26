@@ -41,14 +41,12 @@ namespace Tch.VstsClient.Services.Helpers
             throw new UnauthorizedException();
          }
 
-         var error = JsonConvert.DeserializeObject<Error>(httpResponseDto.Body);
-
-         if (statusCode == HttpStatusCode.NotFound)
+         throw new BadStatusCodeReturned
          {
-            throw new NotFoundStatusCodeException {Error = error};
-         }
-
-         throw new BadStatusCodeReturned {StatusCode = statusCode, Error = error};
+            StatusCode = statusCode, 
+            ResponseBody = httpResponseDto.Body, 
+            Error = JsonConvert.DeserializeObject<Error>(httpResponseDto.Body)
+         };
       }
    }
 }

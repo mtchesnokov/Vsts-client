@@ -10,7 +10,7 @@ namespace Tch.VstsClient.Services
 {
    public class ProjectsService : IProjectsService
    {
-      private readonly IVstsClientService _httpService;
+      private readonly IVstsClientService _vstsClientService;
 
       #region ctor
 
@@ -18,9 +18,9 @@ namespace Tch.VstsClient.Services
       {
       }
 
-      internal ProjectsService(IVstsClientService httpService)
+      internal ProjectsService(IVstsClientService vstsClientService)
       {
-         _httpService = httpService;
+         _vstsClientService = vstsClientService;
       }
 
       #endregion
@@ -32,7 +32,7 @@ namespace Tch.VstsClient.Services
 
       public async Task<IEnumerable<Project>> GetAllProjects()
       {
-         var httpResponse = await _httpService.Get<HttpResponse>("/_apis/projects");
+         var httpResponse = await _vstsClientService.Get<HttpResponse>("/_apis/projects");
          return httpResponse.Value;
       }
    }

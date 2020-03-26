@@ -9,7 +9,9 @@ namespace Tch.VstsClient.Domain.Exceptions
 
       public Error Error { get; set; }
 
-      public BadStatusCodeReturned() : base("Requested project cannot be found")
+      public string ResponseBody { get; set; }
+
+      public BadStatusCodeReturned() : base("External service has returned error status code")
       {
       }
    }

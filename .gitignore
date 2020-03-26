@@ -6,3 +6,4 @@
 **/packages/
 **/appSettings.Private.config
 **/appSettings.Dev.config
+**/*.bat
