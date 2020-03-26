@@ -7,3 +7,4 @@
 **/appSettings.Private.config
 **/appSettings.Dev.config
 **/*.bat
+**/TestResult.xml
