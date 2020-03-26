@@ -4,10 +4,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Mikhail Tchesnokov</Authors>
+    <Description>This package contains a simple .Net client for Azure DevOps Services (aka Visual Studio Team Services) REST API</Description>
+    <PackageTags>vsts client dev ops rest api</PackageTags>
+    <PackageIconUrl>https://user-images.githubusercontent.com/25009369/74135640-f26fce00-4bec-11ea-8faf-8a7fdc6470ca.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/mtchesnokov/Vsts-client</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>c:\GitHub\Vsts-client\Src\bin\Release\Tch.VstsClient.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
